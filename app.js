@@ -7,7 +7,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose');       // helps in connecting the mongoose database
 const session = require('express-session'); // sesssion id is stored (on the server side) 
 const filestore = require('session-file-store')(session);
-var passport = require('passport');   // authenticates 
+var passport = require('passport');   // authenticates requests, and provides hooks 
 var config = require('./config');
 
 
