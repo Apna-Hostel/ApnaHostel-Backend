@@ -6,21 +6,20 @@ var cookieParser = require('cookie-parser'); // parses the cookie header and pop
 var logger = require('morgan');
 const mongoose = require('mongoose');       // helps in connecting the mongoose database
 const session = require('express-session'); // sesssion id is stored (on the server side) 
-const filestore = require('session-file-store')(session);
 var passport = require('passport');   // authenticates requests, and provides hooks 
-var config = require('./config');
+
 
 
 //intitalizing custom routes
-var indexRouter = require('.routes/index');
-var usersRouter = require('routes/users');
-var studentRouter = require('.routes/studentRouter');
-var employeeRouter = require('.routes/employeeRouter');
-var noticeRouter = require('.routes/noticeRouter');
-var complaintRouter = require('.routes/complaintRouter');
-var hostelRouter = require('.routes/hostelRouter');
-var mealBillsRouter = require('.routes/mealBillsRouter');
-var registrationRouter = require('.routes/registrationRouter');
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var studentRouter = require('./routes/studentRouter');
+var employeeRouter = require('./routes/employeeRouter');
+var noticeRouter = require('./routes/noticeRouter');
+var complaintRouter = require('./routes/complaintRouter');
+var hostelRouter = require('./routes/hostelRouter');
+var mealBillsRouter = require('./routes/mealBillsRouter');
+
 
 
 // connnecting to the database
@@ -55,7 +54,7 @@ app.use('./hostels',hostelRouter);
 app.use('./complaints',complaintRouter);
 app.use('./mealBills', mealBillsRouter);
 app.use('./notices',noticeRouter);
-app.use('./registrations', registrationRouter);
+
 
 // forwarding error to the error handler
 app.use(function(req,res,next){
