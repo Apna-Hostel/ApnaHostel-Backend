@@ -3,13 +3,12 @@ var router = express.Router();
 const bodyParser = require('body-parser');
 var User = require('../models/users');
 var passport = require('passport');
-var athenticate = require('../authenticate');
-const {tokenExpiredError} = require('jsonwebtoken');
-const { authenticate } = require('passport');
-const Users = require('../models/users');
+var authenticate = require('../authenticate');
+const {TokenExpiredError} = require('jsonwebtoken');
 
 
-router.use(exoress.json());
+
+router.use(bodyParser.json());  // we can use express.json instead of bodyParser.json
 
 
 
