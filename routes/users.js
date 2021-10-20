@@ -6,11 +6,7 @@ var passport = require('passport');
 var authenticate = require('../authenticate');
 const {TokenExpiredError} = require('jsonwebtoken');
 
-
-
 router.use(bodyParser.json());  // we can use express.json instead of bodyParser.json
-
-
 
 router.options('*',(req,res) =>{
   res.sendStatus(200);
@@ -70,7 +66,7 @@ router.post('/login',(req,res,next) => {
     if(!user){
       res.statusCode=401;
       res.setHeader(('Content-type','application/json'));
-      res.json({success:false,status:'Login Unsuccessful', err:'Could not login user!'});
+      res.json({success:false,status:'Login Unsuccessful', err:info});
     }
 
     req.logIn(user,(err) =>{
@@ -90,8 +86,8 @@ router.post('/login',(req,res,next) => {
 })(req,res,next);
 });
 
-router.get('./logout', (req,res) =>{
-  if(req,session){
+router.get('/logout', (req,res) =>{
+  if(req.session){
     req.session.destroy();
     res.clearCookie('session-id');
     res.redirect('/');

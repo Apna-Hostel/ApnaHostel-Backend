@@ -8,8 +8,6 @@ const mongoose = require('mongoose');       // helps in connecting the mongoose 
 const session = require('express-session'); // sesssion id is stored (on the server side) 
 var passport = require('passport');   // authenticates requests, and provides hooks 
 
-
-
 //intitalizing custom routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -20,12 +18,10 @@ var complaintRouter = require('./routes/complaintRouter');
 var hostelRouter = require('./routes/hostelRouter');
 var mealBillsRouter = require('./routes/mealBillsRouter');
 
-
-
 // connnecting to the database
 require('dotenv').config();
 const DB_url = process.env.MONGO_URL; 
-const connect = mongoose.connect(DB_url,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true});
+const connect = mongoose.connect(DB_url,{useNewUrlParser:true ,useUnifiedTopology:true});
 connect.then((db) => {
     console.log('successfully connected to the server');
 }, (err) => {console.log(err)});
@@ -48,12 +44,14 @@ app.use(express.static(path.join(__dirname,'public'))); // our stylesheets
 //setting up custom routes
 app.use('/',indexRouter);
 app.use('/users',usersRouter);
-//app.use('/students',studentRouter);
-//app.use('/employees',employeeRouter);
-//app.use('/hostels',hostelRouter);
-//app.use('/complaints',complaintRouter);
-//app.use('/mealBills', mealBillsRouter);
-//app.use('/notices',noticeRouter);
+
+// app.use('/students',studentRouter);
+// app.use('/employees',employeeRouter);
+// app.use('/hostels',hostelRouter);
+// app.use('/complaints',complaintRouter);
+// app.use('/mealBills', mealBillsRouter);
+// app.use('/notices',noticeRouter);
+
 
 
 // forwarding error to the error handler

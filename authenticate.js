@@ -23,7 +23,11 @@ opts.secretOrKey = process.env.SECRET_KEY;
 exports.verifyUser = passport.authenticate("jwt", { session: false });
 
 exports.jwtPassport = passport.use(
-  new LocalStrategy(opts, (jwt_payload, done) => {    // changed JwtStrategy to LocalStrategy
+
+     
+
+  new LocalStrategy(opts, (jwt_payload, done) => {
+
     console.log("JWT payload: ", jwt_payload);
     User.findOne({ _id: jwt_payload._id }, (err, user) => {
       if (err) return done(err, false);
