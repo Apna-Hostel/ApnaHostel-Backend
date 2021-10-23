@@ -27,7 +27,7 @@ connect.then((db) => {
 }, (err) => {console.log(err)});
 
 
-const app = express();
+var app = express();
 
 // setting up view engine
 app.set('views', path.join(__dirname,'views'));
@@ -56,12 +56,12 @@ app.use('/hostels',hostelRouter);
 
 // forwarding error to the error handler
 app.use(function(req,res,next){
-    next.createError(404);
+    next(createError(404));
 });
 
 app.use(function(err,req,res,next){
     res.locals.message = err.message;
-    //res.locals.error = req.app.get('env') === 'development' ? err: {};
+    res.locals.error = req.app.get('env') === 'development' ? err: {};
 
     // rendering the error page
     res.status(err.status || 500);

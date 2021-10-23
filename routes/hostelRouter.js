@@ -3,14 +3,15 @@ const bodyParser = require("body-parser");
 const hostelRouter = express.Router();
 const Hostels = require("../models/hostels");
 const authenticate = require("../authenticate");
-//hostelRouter.use(bodyParser.urlencoded({extended:true}));
+
+const cors = require('./cors');
 hostelRouter.use(bodyParser.json());
 
 hostelRouter.route("/")
-  .options((req, res) => {
+  .options(cors.corsWithOptions, (req, res) => {
     res.sendStatus(200);
   })
-  .get(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+  .get(cors.cors, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Hostels.find({})
       .then(
         (hostels) => {
@@ -23,7 +24,7 @@ hostelRouter.route("/")
       .catch((err) => next(err));
   })
 
-  .post((req, res, next) => {
+  .post(cors.corsWithOptions, (req, res, next) => {
     Hostels.create(req.body).then(
       (hostels) => {
         res.statusCode = 200;
@@ -35,7 +36,7 @@ hostelRouter.route("/")
   })
 
 
-  .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) => {
+  .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) => {
     Hostels.deleteMany({})
     .then((response) =>{
         res.statusCode = 200;
