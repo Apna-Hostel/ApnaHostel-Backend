@@ -1,7 +1,7 @@
 const express = require('express');
-const bodyParser = requie('body-parser');
+const bodyParser = require('body-parser');
 const studentRouter = express.Router();
-studentuRouter.use(bodyPArser.json());
+studentRouter.use(bodyParser.json());
 const Students = require('../models/students');
 const User = require('../models/users');
 var authenticate = require('../authenticate');
