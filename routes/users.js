@@ -59,7 +59,7 @@ router.post('/signup',cors.corsWithOptions, (req,res,next) => {
   });
 });
 
-router.post('/login',(req,res,next) => {
+router.post('/login',cors.corsWithOptions, (req,res,next) => {
   passport.authenticate('local', (err,user,info) => {
     if(err)
     return next(err);
@@ -87,7 +87,7 @@ router.post('/login',(req,res,next) => {
 })(req,res,next);
 });
 
-router.get('/logout', (req,res) =>{
+router.get('/logout', cors.corsWithOptions, (req,res) =>{
   if(req.session){
     req.session.destroy();
     res.clearCookie('session-id');
@@ -100,7 +100,7 @@ router.get('/logout', (req,res) =>{
   }
 });
 
-router.get('/checkJWTtoken',(req,res) =>{
+router.get('/checkJWTtoken',cors.corsWithOptions, (req,res) =>{
   passport.authenticate('jwt',{session:false},(err,user,info) =>{
     if(err)
     return next(err);
