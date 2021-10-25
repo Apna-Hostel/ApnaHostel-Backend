@@ -4,21 +4,21 @@ const Schema = mongoose.Schema;
 const studentSchema = new Schema({
     studentName: {
         type : String,
-        required=true
+        required:true
     },
     sid:{
         type : String,
-        unique=true,
-        required=true
+        unique:true,
+        required:true
     },
     mobileNo: {
         type: String,
-        unique=true,
-        required=true
+        unique:true,
+        required:true
     },
     dob:{
         type:Date,
-        required=true
+        required:true
     },
     gender: {
         type: String,

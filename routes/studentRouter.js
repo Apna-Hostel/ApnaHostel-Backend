@@ -9,7 +9,7 @@ const cors = require('./cors');
 
 studentRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
-    .get(cores.cors, authenticate.verifyUser, (req, res, next) => {
+    .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
         console.log(req.user.hostel);
         Students.find({ hostel: req.user.hostel })
             .populate('hostel')
@@ -25,7 +25,7 @@ studentRouter.route('/')
         res.end('put request not valid on the /students end point')
     })
 
-    .post(cores.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+    .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         req.body.hostel = req.user.hostel;
         Students.create(req.body)
             .then((student) => {
