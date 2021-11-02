@@ -44,8 +44,8 @@ app.use(express.static(path.join(__dirname,'public'))); // our stylesheets
 //setting up custom routes
 app.use('/',indexRouter);
 app.use('/users',usersRouter);
-// app.use('/students',studentRouter);
-// app.use('/employees',employeeRouter);
+app.use('/students',studentRouter);
+app.use('/employees',employeeRouter);
 app.use('/hostels',hostelRouter);
 app.use('/complaints',complaintRouter);
 // app.use('/mealBills', mealBillsRouter);
