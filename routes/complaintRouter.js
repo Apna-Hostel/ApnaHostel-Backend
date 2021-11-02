@@ -56,5 +56,33 @@ complaintRouter
     })
 
 
+complaintRouter.route('/:complaintId')
+    .options(cors.corsWithOptions, (req,res) =>{ res.sendStatus(200)})
+    .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) => {
+      Complaints.findById(req.params.complaintId)
+      .then((complaint =>{
+        if(complaint!=null){
+          Complaints.findByIdAndUpdate(req.params.complaintId, {$set: req,body}, {new:true})
+            .then((complaint) =>{
+              Complaints.findById(complaint._id)
+                .then((complaint) =>{
+                  res.sendStatus(200);
+                  res.setHeader('Content-type', 'application/json');
+                  res.json(complaint);
+                }, err => next(err))
+            }, err =>next(err))
+        }
+      }, err => next(err)))
+    })
 
-    module.exports = complaintRouter;
+    .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) =>{
+        Complaints.findByIdAndDelete(req.params.complaintId)
+        .then((response) => {
+          res.statusCode=200;
+          res.setHeader('Content-type', 'application/json');
+          res.json(response);
+        }, err => next(err))
+          .catch(err => next(err))
+    })
+
+    module.exports = complaintRouter; 
