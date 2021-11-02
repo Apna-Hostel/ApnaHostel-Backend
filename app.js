@@ -49,7 +49,7 @@ app.use('/employees',employeeRouter);
 app.use('/hostels',hostelRouter);
 app.use('/complaints',complaintRouter);
 // app.use('/mealBills', mealBillsRouter);
-// app.use('/notices',noticeRouter);
+app.use('/notices',noticeRouter);
 
 
 
