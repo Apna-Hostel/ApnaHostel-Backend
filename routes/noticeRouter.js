@@ -49,4 +49,28 @@ noticeRouter.route('/')
             }, err => next(err))
     })
 
+noticeRouter.route('/:noticeId')
+    .options(cors.corsWithOptions,  (req,res) =>{ res.sendStatus(200)})
+    .get(cors.cors, authenticate.verifyUser, (req,res,next) =>{
+        res.statusCode=403;
+        res.end(`Get Openraiont not supported on /${req.params.noticeId}`);
+    })
+    .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) =>{
+        res.statusCode = 403;
+        res.end(`Post operation not supported on /${req.params.noticeId}`);
+    })
+    .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+        res.statusCode = 403;
+        res.end(`Put operation not supported on /${req.params.noticeId}`);
+    })
+    .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) =>{
+        Notices.findByIdAndDelete(req.params.noticeId)
+            .then((response) =>{
+                res.statusCode=200;
+                res.setHeader('Content-type','application/json');
+                res.json(response);
+            }, err => next(err))
+                .catch(err => next(err))
+    })
+
 module.exports = noticeRouter;
