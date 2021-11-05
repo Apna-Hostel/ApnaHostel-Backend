@@ -7,8 +7,7 @@ const Complaints = require("../models/complaints");
 var authenticate = require("../authenticate");
 const cors = require("./cors");
 
-complaintRouter
-  .route("/")
+complaintRouter.route("/")
   .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
   .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
     Complaints.find({ hostel: req.user.hostel })

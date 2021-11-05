@@ -6,7 +6,6 @@ const Students = require('../models/students');
 const User = require('../models/users');
 var authenticate = require('../authenticate');
 const cors = require('./cors');
-const { response } = require('../app');
 
 studentRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
@@ -14,7 +13,7 @@ studentRouter.route('/')
         console.log(req.user.hostel);
         Students.find({ hostel: req.user.hostel })
             .populate('hostel')
-            .then((Students) => {
+            .then((students) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json')
                 res.json(students);
@@ -53,10 +52,10 @@ studentRouter.route('/')
             .catch((err) => next(err))
     })
 
-studentRouter.route('/:studetnId')
+studentRouter.route('/:studentId')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
     .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
-        Students.findById(req.params.studetnId)
+        Students.findById(req.params.studentId)
             .then((student) => {
                 if (student != null) {
                     res.statusCode = 200;
@@ -96,7 +95,7 @@ studentRouter.route('/:studetnId')
     })
 
     .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-        Students.findByIdAndDelete(req.params.studetnId)
+        Students.findByIdAndDelete(req.params.studentId)
             .then((response) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');

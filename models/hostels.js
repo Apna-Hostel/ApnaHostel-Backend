@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const hostelSchema = {
     name:{
@@ -7,6 +8,6 @@ const hostelSchema = {
     }
 };
 
-const Hostel = mongoose.model("Hostels", hostelSchema);
+const Hostels = mongoose.model("Hostel", hostelSchema);
 
-module.exports = Hostel;
+module.exports = Hostels;

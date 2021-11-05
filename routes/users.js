@@ -78,7 +78,7 @@ router.post('/login',cors.corsWithOptions, (req,res,next) => {
         res.json({success:false,status:'Login Unsuccessful!!', err:'Could not login in user!' });
       }
 
-    var token = authenticate.getToken({_id:req.user._id});
+    var token = authenticate.getToken({_id: req.user._id});
     var admin = req.user.admin;
     res.statusCode = 200;
     res.setHeader('Content-Type','application/json');

@@ -11,13 +11,9 @@ const employeeSchema=new Schema({
         type: String,
         required: true
     },
-    emplyeeType: {
+    employeeType: {
         type: String,
         required: true
-    },
-    designation: {
-        type: String, 
-        required: true 
     },
     joiningDate: {
         type: Date, 

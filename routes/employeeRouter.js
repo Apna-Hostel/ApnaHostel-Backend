@@ -14,7 +14,7 @@ employeeRouter.route('/')
         console.log(req.body);
         Employees.find({ hostel: req.user.hostel })
             .populate('hostel')
-            .then((Employees) => {
+            .then((employees) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(employees);
@@ -91,7 +91,7 @@ employeeRouter.route('/:employeeId')
     })
 
     .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) => {
-        Employees.findByIdAndDelete(req,params.employeeId)
+        Employees.findByIdAndDelete(req.params.employeeId)
             .then((response) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
