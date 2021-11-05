@@ -48,7 +48,7 @@ app.use('/students',studentRouter);
 app.use('/employees',employeeRouter);
 app.use('/hostels',hostelRouter);
 app.use('/complaints',complaintRouter);
-// app.use('/mealBills', mealBillsRouter);
+app.use('/mealBills', mealBillsRouter);
 app.use('/notices',noticeRouter);
 
 
