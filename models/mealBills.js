@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const mealBillsSchema = new Schema({
+const mealBillsSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true
     },
     sid:{
-        type:string,
+        type:String,
         required:true
     },
     branch: {
