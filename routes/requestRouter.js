@@ -1,40 +1,38 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const roomRouter = express.Router();
-roomRouter.use(bodyParser.json());
-const Rooms = require('../models/rooms');
+const requestRouter = express.Router();
+requestRouter.use(bodyParser.json());
+const Requests = require('../models/requests');
 const User = require('../models/users');
 var authenticate = require('../authenticate');
 const cors = require('./cors');
 
-roomRouter.route('/')
+requestRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
     .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
         console.log(req.user.hostel);
-        Rooms.find({ hostel: req.user.hostel })
-            .populate('hostel')
-            .then((rooms) => {
+        Requests.find({ hostel: req.user.hostel })
+            .populate('hostelName')
+            .then((requests) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json')
-                res.json(rooms);
+                res.json(requests);
             }, err => next(err))
             .catch(err => next(err))
     })
 
     .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-        res.end('put request not valid on the /rooms end point')
+        res.end('put request not valid on the /students end point')
     })
 
-    .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-        req.body.hostel = req.user.hostel;
-        Rooms.create(req.body)
-            .then((room) => {
-                Rooms.findById(room._id)
-                    .populate('hostel')
-                    .then((room) => {
+    .post(cors.corsWithOptions, (req, res, next) => {
+        Requests.create(req.body)
+            .then((request) => {
+                Requests.findById(request._id)
+                    .then((request) => {
                         res.statusCode = 200;
                         res.setHeader('Content-Type', 'application/json');
-                        res.json(room)
+                        res.json(request)
                     }, (err) => next(err))
 
 
@@ -43,7 +41,7 @@ roomRouter.route('/')
     })
 
     .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-        Rooms.deleteMany({ hostel: req.user.hostel })
+        Requests.deleteMany({ hostel: req.user.hostel })
             .then((response) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
@@ -52,15 +50,15 @@ roomRouter.route('/')
             .catch((err) => next(err))
     })
 
-roomRouter.route('/:roomId')
+requestRouter.route('/:requestId')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
     .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
-        Rooms.findById(req.params.roomId)
-            .then((room) => {
-                if (room != null) {
+        Requests.findById(req.params.requestId)
+            .then((request) => {
+                if (request != null) {
                     res.statusCode = 200;
                     res.setHeader('Content-type', 'application/json');
-                    res.json(room);
+                    res.json(request);
                 } else {
                     const err = new Error("student not found");
                     err.status = 403;
@@ -71,19 +69,19 @@ roomRouter.route('/:roomId')
     })
 
     .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-        Rooms.findById(req.params.roomId)
-            .then((room) => {
-                if (room != null) {
+        Requests.findById(req.params.requestId)
+            .then((request) => {
+                if (request != null) {
                     console.log('hello');
-                    Rooms.findByIdAndUpdate(req.params.roomId, {
+                    Requests.findByIdAndUpdate(req.params.requestId, {
                         $set: req.body
                     }, { new: true })
-                        .then((newRoom) => {
-                            Rooms.findById(newRoom._id)
-                                .then((room) => {
+                        .then((newRequest) => {
+                            Requests.findById(newRequest._id)
+                                .then((request) => {
                                     res.statusCode = 200;
                                     res.setHeader('Content-type', 'application/json');
-                                    res.json(room);
+                                    res.json(request);
                                 }, err => next(err))
                         }, err => next(err))
                 }
@@ -95,7 +93,7 @@ roomRouter.route('/:roomId')
     })
 
     .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-        Rooms.findByIdAndDelete(req.params.roomId)
+        Requests.findByIdAndDelete(req.params.requestId)
             .then((response) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
@@ -103,4 +101,4 @@ roomRouter.route('/:roomId')
             }, err => next(err))
     })
 
-module.exports = roomRouter;
+module.exports = requestRouter;

@@ -17,6 +17,10 @@ const mealBillsSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    paymentDate: {
+        type: Date, 
+        required: true 
+    },
     hostel:{
         type: mongoose.Schema.Types.ObjectId,
         ref : 'Hostel'
