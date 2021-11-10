@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 
-const noticeSchema = new mongoose.Schema({
-  title: {
+const roomSchema = new Schema({
+  roomId: {
     type: String,
     required: true,
   },
-  description: {
+  capacity: {
+    type: String,
+    required: true,
+  },
+  alloted: {
     type: String,
     required: true,
   },
@@ -15,6 +19,6 @@ const noticeSchema = new mongoose.Schema({
   },
 });
 
-const Notices = mongoose.model("Notice", noticeSchema);
+const Rooms = mongoose.model("Room", roomSchema);
 
-module.exports = Notices;
+module.exports = Rooms;

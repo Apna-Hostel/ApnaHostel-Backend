@@ -60,6 +60,16 @@ const studentSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hostel'
     },
+    cg: {
+        type:String,
+        
+    },
+
+    year: {
+        type: String,
+        required: true
+    },
+
 
 });
 
