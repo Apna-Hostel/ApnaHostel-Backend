@@ -14,7 +14,7 @@ studentRouter.route('/')
         console.log(req.user.hostel);
         Students.find({ hostel: req.user.hostel })
             .populate('hostel')
-            .then((Students) => {
+            .then((students) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json')
                 res.json(students);
