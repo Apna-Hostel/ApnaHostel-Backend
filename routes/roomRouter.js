@@ -74,7 +74,7 @@ roomRouter.route('/:roomId')
         Rooms.findById(req.params.roomId)
             .then((room) => {
                 if (room != null) {
-                    console.log('hello');
+                    console.log(room);
                     Rooms.findByIdAndUpdate(req.params.roomId, {
                         $set: req.body
                     }, { new: true })

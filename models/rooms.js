@@ -10,7 +10,7 @@ const roomSchema = new mongoose.Schema({
     required: true,
     default: 1
   },
-  alloted: {
+  available: {
     type: String,
     required: true,
     default: 1

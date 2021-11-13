@@ -11,7 +11,7 @@ requestRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
     .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
         console.log(req.user.hostel);
-        Requests.find({ hostel: req.user.hostel })
+        Requests.find({ hostelName: req.user.hostel })
             .populate('hostelName')
             .then((requests) => {
                 res.statusCode = 200;
@@ -41,7 +41,7 @@ requestRouter.route('/')
     })
 
     .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-        Requests.deleteMany({ hostel: req.user.hostel })
+        Requests.deleteMany({ hostelName: req.user.hostel })
             .then((response) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');

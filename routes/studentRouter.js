@@ -6,6 +6,7 @@ const Students = require('../models/students');
 const User = require('../models/users');
 var authenticate = require('../authenticate');
 const cors = require('./cors');
+const Rooms = require('../models/rooms');
 
 studentRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
@@ -27,6 +28,7 @@ studentRouter.route('/')
 
     .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         req.body.hostel = req.user.hostel;
+        const roomNo = req.body.roomNo;
         Students.create(req.body)
             .then((student) => {
                 Students.findById(student._id)
@@ -36,7 +38,6 @@ studentRouter.route('/')
                         res.setHeader('Content-Type', 'application/json');
                         res.json(student)
                     }, (err) => next(err))
-
 
             }, (err) => next(err))
             .catch((err) => next(err))
