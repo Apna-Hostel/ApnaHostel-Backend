@@ -62,7 +62,7 @@ const studentSchema = new Schema({
     },
     cg: {
         type:String,
-        
+        required: true,
     },
 
     year: {

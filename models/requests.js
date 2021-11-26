@@ -58,6 +58,8 @@ const requestSchema = new Schema({
     },
     cg: {
         type:String,
+        required: true,
+        default: "0"
     },
 
     year: {
