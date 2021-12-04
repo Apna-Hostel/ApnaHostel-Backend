@@ -18,7 +18,10 @@ var complaintRouter = require('./routes/complaintRouter');
 var hostelRouter = require('./routes/hostelRouter');
 var mealBillsRouter = require('./routes/mealBillsRouter');
 var requestRouter = require('./routes/requestRouter');
-const roomRouter = require('./routes/roomRouter');
+var roomRouter = require('./routes/roomRouter');
+var mealsRouter= require('./routes/mealsRouter');
+
+
 
 // connnecting to the database
 require('dotenv').config();
@@ -54,7 +57,7 @@ app.use('/mealBills', mealBillsRouter);
 app.use('/notices',noticeRouter);
 app.use('/requests', requestRouter);
 app.use('/rooms', roomRouter);
-
+app.use('/meals',mealsRouter);
 
 
 // forwarding error to the error handler

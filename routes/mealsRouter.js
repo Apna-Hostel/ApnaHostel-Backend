@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mealsRouter = express.Router();
 mealsRouter.use(bodyParser.json());
 const Meals = require('../models/meals');
-const User = require('..models/user');
+const User = require('../models/users');
 var authenticate = require('../authenticate');
 const cors = require('./cors');
 
