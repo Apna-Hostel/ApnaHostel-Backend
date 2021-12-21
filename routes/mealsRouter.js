@@ -7,48 +7,46 @@ const User = require('../models/users');
 var authenticate = require('../authenticate');
 const cors = require('./cors');
 
-
 mealsRouter.route('/')
-    .options(cors.corsWithOptions, (req,res) => {res.sendStatus(200); })
-    .get(cors.cors, authenticate.verifyUser, (req,res,next) => {
-        Meals.find({hostel:req.user.hostel})
-            .then(meals => {
-                res.statusCode=200;
-                res.setHeader('Content-type','application/json');
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+    .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
+        Meals.find({ hostel: req.user.hostel })
+            .then((meals) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json')
                 res.json(meals);
             }, err => next(err))
             .catch(err => next(err))
     })
 
-    .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) => {
-        res.end('Put request not supported on the meals end point')
+    .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+        res.end('Put request not valid on the /meals end point')
     })
 
-    .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) => {
+    .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         req.body.hostel = req.user.hostel;
         Meals.create(req.body)
-            .then(meals => {
+            .then((meals) => {
                 Meals.findById(meals._id)
                     .populate('hostel')
-                    .then(meals => {
-                        res.statusCode=200;
-                        res.setHeader('Content-type','applicaiton/json');
+                    .then((meals) => {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json')
                         res.json(meals);
-                    }, err => next(err))
-                    .catch(err => next(err))
-            })
+                    })
+            }, (err) => next(err))
+            .catch((err) => next(err))
     })
-
-    .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req,res,next) => {
-        Meals.deleteMany({hostel:req.user.hostel})
-            .then(response => {
-                res.statusCode=200;
-                res.setHeader('Content-type','application/json');
+    .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+        Meals.deleteMany({ hostel: req.user.hostel })
+            .then((response) => {
+                res.statusCode = 200;
+                res.setHeader('Content-type', 'application/json');
                 res.json(response);
-            }, err => next(err))
+            }, (err) => next(err))
     })
 
-    mealsRouter.route('/:mealId')
+mealsRouter.route('/:mealId')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
     .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
         Meals.findById(req.params.mealId)
@@ -97,18 +95,5 @@ mealsRouter.route('/')
             .catch(err => next(err))
     })
 
-module.exports = mealsRouter;    
 
-    
- 
-        
-            
-        
-        
-        
-
-
-
-
-
-
+module.exports = mealsRouter;
